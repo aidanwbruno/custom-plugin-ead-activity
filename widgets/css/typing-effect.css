@@ -1,0 +1,20 @@
+.typing-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.typing-placeholder {
+    display: block; /* Garante que o texto reserve espaço */
+}
+
+.typing-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
+
+

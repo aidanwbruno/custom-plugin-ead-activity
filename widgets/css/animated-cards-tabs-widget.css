@@ -1,0 +1,221 @@
+/* ---------- NAV (ABAS) ---------- */
+.ead-animated-tabs { 
+  position: relative; 
+  font-family: "Roboto", sans-serif; 
+}
+
+.ead-animated-tabs-nav{
+  display:flex; 
+  flex-wrap:wrap; 
+  gap:12px; 
+  align-items:center; 
+  justify-content:flex-start; 
+  margin-bottom:16px;
+}
+
+/* Reset forte de borda/sombra + estilo base (sem !important em bg/cor) */
+.ead-animated-tab,
+.ead-animated-tabs-nav button.ead-animated-tab[type="button"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0 !important;            /* evita regra global */
+  box-shadow: none !important;     /* evita regra global */
+  background: #F3F4F6;             /* será sobrescrito pelos controles do Elementor */
+  color: #111827;                  /* idem */
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter .2s ease, transform .06s ease, background-color .2s ease, color .2s ease;
+}
+
+.ead-animated-tab:hover { 
+  filter:brightness(.97); 
+}
+
+.ead-animated-tab:active { 
+  transform:translateY(1px); 
+}
+
+/* Estado ativo — sem !important para permitir override do Elementor */
+.ead-animated-tab.is-active { 
+  background:#EBEBEB; 
+  color:#fff; 
+}
+
+/* Foco acessível (sem borda nativa) */
+.ead-animated-tab:focus{
+  outline: none;
+}
+.ead-animated-tab:focus-visible{
+  outline: 2px solid currentColor;      
+  outline-offset: 2px;
+  border: 0 !important;
+}
+
+/* ---------- AREA DOS CARDS ---------- */
+.ead-animated-tabs-cards{
+  list-style:none; 
+  padding:0; 
+  margin:0; 
+  position:relative;
+}
+
+/* Base: todos absolutos e fora de cena */
+.ead-animated-tabcard{
+  position:absolute; 
+  inset:0;                  
+  opacity:0; 
+  pointer-events:none;
+  transform: translateY(12px) scale(.98);
+  will-change: opacity, transform;
+  background:#EBEBEB; 
+  border-radius:16px; 
+  padding:24px;
+  box-shadow: 0 6px 24px rgba(16,24,40,.12);
+  display:flex; 
+  flex-direction:column; 
+  gap:20px; 
+  align-items:stretch; 
+  justify-content:flex-start;
+  z-index:1;
+}
+
+/* Card atual: relativo para dar altura e ficar acima das sombras */
+.ead-animated-tabcard.is-current{
+  position:relative; 
+  inset:auto;               
+  opacity:1; 
+  pointer-events:auto;
+  transform: none;
+  animation: eadCardIn .45s cubic-bezier(.22,.61,.36,1) both;
+  z-index:5;
+}
+
+/* Card que sai */
+.ead-animated-tabcard.is-leaving{
+  animation: eadCardOut .35s cubic-bezier(.55,.06,.68,.19) both;
+  z-index:2;
+}
+
+/* Sombras “pilha” */
+.ead-animated-tabcard::before,
+.ead-animated-tabcard::after{
+  content:""; 
+  position:absolute; 
+  left:10px; 
+  right:10px; 
+  bottom:-8px; 
+  height:12px;
+  background:inherit; 
+  border-radius:inherit; 
+  opacity:.55; 
+  z-index:0; 
+  box-shadow: inherit;
+}
+.ead-animated-tabcard::after{
+  left:20px; 
+  right:20px; 
+  bottom:-16px; 
+  opacity:.35;
+}
+
+/* ---------- ANIMAÇÕES ---------- */
+@keyframes eadCardIn{
+  0%   { opacity:0; transform: translateY(16px) scale(.98); }
+  60%  { opacity:1; transform: translateY(0)   scale(1.005); }
+  100% { opacity:1; transform: translateY(0)   scale(1); }
+}
+@keyframes eadCardOut{
+  0%   { opacity:1; transform: translateY(0)    scale(1); }
+  100% { opacity:0; transform: translateY(-10px) scale(.98); }
+}
+
+/* ---------- GRID INTERNO ---------- */
+.ead-animated-tabcard.with-image{ 
+  flex-direction: row; 
+  align-items:center; 
+  gap:20px; 
+}
+.ead-animated-tabcard .imgcol,
+.ead-animated-tabcard .contentcol{ 
+  min-width:0; 
+}
+
+.ead-animated-tabcard .imgcol{
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  overflow:hidden; 
+  border-radius:inherit;
+  /* larguras aplicadas via JS lendo --img-col-w */
+}
+.ead-animated-tabcard .imgcol img{
+  display:block; 
+  max-width:100%; 
+  height:auto; 
+  width:100%;
+  border-radius:inherit; 
+  object-fit:contain;
+}
+
+.ead-animated-tabcard .contentcol{
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center;
+}
+
+.ead-animated-tabcard-title{
+  margin:0 0 8px 0; 
+  font-size:22px; 
+  font-weight:800;
+}
+
+/* Divider (personalizado pelos controles de estilo) */
+.ead-animated-tabcard-divider{
+  border:none; 
+  border-top:4px dotted rgba(0,0,0,.35);
+  width:25%;
+  margin-top:12px; 
+  margin-bottom:16px;
+}
+
+/* Alinhamento do divisor via classe no wrapper */
+.ead-divalign-left  .ead-animated-tabcard-divider{ margin-left:0;    margin-right:auto; }
+.ead-divalign-center .ead-animated-tabcard-divider{ margin-left:auto; margin-right:auto; }
+.ead-divalign-right .ead-animated-tabcard-divider{ margin-left:auto; margin-right:0; }
+
+/* ---------- RESPONSIVO ---------- */
+@media (max-width: 921px){
+  /* empilha verticalmente SEMPRE quando há imagem */
+  .ead-animated-tabcard.with-image{
+    flex-direction: column !important;
+    align-items: stretch;
+  }
+
+  /* cada coluna ocupa 100% */
+  .ead-animated-tabcard.with-image > .imgcol,
+  .ead-animated-tabcard.with-image > .contentcol{
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* ordem: imagem primeiro, conteúdo depois */
+  .ead-animated-tabcard.with-image > .imgcol{ order: 0 !important; }
+  .ead-animated-tabcard.with-image > .contentcol{ order: 1 !important; }
+
+  /* imagem cheia */
+  .ead-animated-tabcard .imgcol img{
+    display:block; 
+    width:100% !important; 
+    max-width:100% !important; 
+    height:auto !important; 
+    margin:0 auto;
+    object-fit: contain;
+  }
+}

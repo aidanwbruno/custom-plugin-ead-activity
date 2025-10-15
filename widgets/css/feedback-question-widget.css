@@ -1,0 +1,139 @@
+/* Container principal */
+.question-feedback-container {
+    font-family: inherit;
+    max-width: 100%;
+    padding: 20px;
+    background-color: hsla(0, 0%, 100%, 0);
+    box-sizing: border-box;
+}
+
+/* Título da pergunta */
+.question-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #000;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+/* Container das opções */
+.question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* Estilo base das opções */
+.question-option {
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+
+    /* Variáveis padrão (sobrescritas pelo Elementor) */
+    --correct-color: #28a745;
+    --wrong-color: #dc3545;
+    --border-width: 2px;
+    --border-padding: 12px 15px;
+}
+
+/* Conteúdo da opção */
+.question-option-content {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+}
+
+/* Ícones das opções */
+.question-option-icon {
+    margin-right: 12px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    color: #6c757d;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Texto das opções */
+.question-option-text {
+    font-weight: normal;
+    transition: all 0.3s ease;
+    flex-grow: 1;
+}
+
+/* Estados das opções */
+.question-option:hover {
+    background-color: #e9ecef;
+}
+
+.question-option.selected {
+    background-color: #e7f5ff;
+}
+
+.question-option.correct,
+.question-option.wrong {
+    border: none !important;
+}
+
+/* Feedback */
+.question-feedback {
+    margin-top: 10px;
+    padding: 12px 15px;
+    background-color: #f8f9fa;
+    border-radius: 0 0 4px 4px;
+    display: none;
+    border-top: 1px dashed #dee2e6;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+/* Quando tem feedback, ajusta o padding inferior da opção */
+.question-option.has-feedback {
+    padding-bottom: 0;
+}
+
+/* Botão de reset */
+.question-reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.question-reset-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Efeitos de transição */
+.question-option,
+.question-option-icon,
+.question-reset-button {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Melhorias para mobile */
+@media (max-width: 480px) {
+    .question-option-content {
+        padding: 10px 12px;
+    }
+    
+    .question-option-icon {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+    
+    .question-feedback {
+        padding: 10px 12px;
+    }
+}

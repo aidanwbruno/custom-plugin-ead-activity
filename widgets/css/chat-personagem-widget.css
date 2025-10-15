@@ -1,0 +1,94 @@
+.chat-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.speech-bubbles {
+    position: relative;
+    width: 100%;
+}
+
+[class^="speech-bubble-"] {
+    position: relative;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.chat-text {
+    margin: 0;
+    padding: 0;
+}
+
+.button-container.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.start-button-wrapper {
+    display: inline-block;
+}
+
+.arrow-buttons-left,
+.arrow-buttons-right {
+    display: inline-block;
+}
+
+.elementor-widget-chat_personagem .next-bubble,
+.elementor-widget-chat_personagem .prev-bubble,
+.elementor-widget-chat_personagem .start-bubble {
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 16px;
+    transition: opacity 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.elementor-widget-chat_personagem button.next-bubble,
+.elementor-widget-chat_personagem button.prev-bubble,
+.elementor-widget-chat_personagem button.start-bubble {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.next-bubble i,
+.prev-bubble i,
+.start-bubble i {
+    font-size: 24px;
+}
+
+.caret {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.caret.top {
+    top: -30px;
+}
+
+.caret.bottom {
+    bottom: -30px;
+}
+
+.caret.left {
+    left: -30px;
+}
+
+.caret.right {
+    right: -30px;
+}

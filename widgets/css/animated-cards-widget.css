@@ -1,0 +1,372 @@
+/* ============== Wrapper / Layout base ============== */
+.ead-animated-cards-wrapper {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  overflow: visible; /* não corta os cards durante as animações */
+}
+
+.ead-animated-card{
+  overflow: hidden;                 /* <— segura cantos arredondados */
+  box-sizing: border-box;
+}
+
+/* Reserva de espaço quando a navegação é lateral */
+.ead-animated-cards-wrapper.ead-has-sides-nav {
+  padding-left: 56px;   /* ajuste conforme o tamanho dos botões */
+  padding-right: 56px;
+}
+
+.ead-animated-card-imgcol{
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* a imagem obedece ao espaço disponível da coluna */
+.ead-animated-card-imgcol img{
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;        /* lateral: ocupa 100% da coluna; */
+  height: auto;       /* vertical: mantém proporção */
+  object-fit: contain;/* sem cortes; mude para 'cover' se quiser preencher cortando */
+}
+
+/* Lista que contém a pilha de cards */
+.ead-animated-cards-list {
+  position: relative;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  min-height: 400px;
+}
+
+.ead-animated-cards-nav.ead-nav--sides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* usa a custom property --sides-offset (vinda do controle) para subir/descer */
+.ead-animated-cards-nav.ead-nav--sides .ead-animated-cards-nav-button {
+  position: absolute;
+  top: calc(50% + var(--sides-offset, 0px)); /* ← aqui */
+  transform: translateY(-50%);
+  pointer-events: auto;
+  z-index: 60;
+}
+
+.ead-animated-cards-nav.ead-nav--bottom {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* ← default; controle "Espaço acima dos botões (embaixo)" sobrescreve */
+  gap: 20px;
+}
+
+/* ============== Alinhamento dos cards ============== */
+.ead-align-left .ead-animated-card {
+  left: 0; right: auto; margin-left: 0; margin-right: 0;
+  transform-origin: 0 0;
+}
+.ead-align-center .ead-animated-card {
+  left: 0; right: 0; margin-left: auto; margin-right: auto;
+  transform-origin: 50% 0;
+}
+.ead-align-right .ead-animated-card {
+  left: auto; right: 0; margin-left: 0; margin-right: 0;
+  transform-origin: 100% 0;
+}
+
+/* Espelhamento das transforms quando alinhado à direita */
+.ead-align-right .ead-animated-card { 
+  transform: translateY(0) rotate(4deg) translateX(-25px) scale(1);
+}
+.ead-align-right .ead-animated-card--current {
+  transform: rotate(1deg) translateX(0) scale(1);
+}
+.ead-align-right .ead-animated-card--next {
+  transform: translateY(-25px) rotate(-4deg) translateX(-25px) scale(1);
+}
+.ead-align-right .ead-animated-card--out {
+  transform: translateY(-50px) rotate(-8deg) translateX(-55px) scale(0.95);
+}
+.ead-align-right .ead-animated-card--no-animation,
+.ead-align-right .ead-animated-card--previous {
+  transform: translateY(-25px) rotate(-6deg) translateX(-25px) scale(1);
+}
+
+/* ============== Cards ============== */
+.ead-animated-card {
+  position: absolute;
+  top: var(--stack-offset, 70px);
+  background-color: #fbfefe;
+  padding: 40px;
+  transform: translateY(0) rotate(-4deg) translateX(25px) scale(1);
+  transform-origin: 0 0;
+  transition:
+    transform 0.6s cubic-bezier(.8, .2, .1, 0.8) 0.1s,
+    background 0.4s linear;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch; /* garante a largura cheia para alinhar texto */
+  font-size: 18px;
+  color: #2A2A2A;
+}
+
+.ead-animated-card--current {
+  cursor: auto;
+  user-select: auto;
+  position: relative;
+  z-index: 10;
+  opacity: 1;
+  transform: rotate(-1deg) translateX(0%) scale(1);
+}
+
+.ead-animated-card--next {
+  z-index: 9;
+  transform: translateY(-25px) rotate(4deg) translateX(25px) scale(1);
+}
+
+.ead-animated-card--out {
+  animation: ead-card-out 0.6s cubic-bezier(.8, .2, .1, 0.8);
+  transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95);
+  z-index: 1;
+}
+
+.ead-animated-card--no-animation {
+  z-index: 2;
+  transform: translateY(-25px) rotate(6deg) translateX(25px) scale(1);
+}
+
+.ead-animated-card--previous {
+  z-index: 1;
+  transform: translateY(-25px) rotate(4deg) translateX(25px) scale(1);
+}
+
+.ead-animated-card--on {
+  animation: ead-card-on 0.6s cubic-bezier(.8, .2, .1, 0.8);
+  transform: translateY(0px) rotate(-4deg);
+  z-index: 20;
+}
+
+.ead-animated-card--no-animation-return {
+  z-index: 3;
+  transform: translateY(-25px) rotate(6deg) translateX(25px) scale(1);
+}
+
+.ead-animated-card--current-return {
+  cursor: auto;
+  user-select: auto;
+  position: relative;
+  z-index: 20;
+  opacity: 1;
+  transform: rotate(-1deg) translateX(0%) scale(1);
+}
+
+/* ============== Animações ============== */
+@keyframes ead-card-out {
+  0% { z-index: 20; transform: translateY(0px) rotate(-4deg); }
+  50% { transform: translateY(-120%) rotate(-5deg) translateX(-40px); }
+  80% { z-index: 1; }
+  100% { transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95); }
+}
+
+@keyframes ead-card-on {
+  0% { transform: translateY(-50px) rotate(8deg) translateX(55px) scale(0.95); z-index: 1; }
+  50% { transform: translateY(-120%) rotate(-5deg) translateX(-40px); }
+  80% { z-index: 20; }
+  100% { transform: translateY(0px) rotate(-4deg); z-index: 20; }
+}
+
+/* Espelhadas p/ alinhamento à direita + blindagem contra shorthands externos */
+@keyframes ead-card-out-rtl {
+  0%   { z-index: 20; transform: translateY(0px) rotate(4deg); }
+  50%  { transform: translateY(-120%) rotate(5deg) translateX(40px); }
+  80%  { z-index: 1; }
+  100% { transform: translateY(-50px) rotate(-8deg) translateX(-55px) scale(0.95); }
+}
+@keyframes ead-card-on-rtl {
+  0%   { transform: translateY(-50px) rotate(-8deg) translateX(-55px) scale(0.95); z-index: 1; }
+  50%  { transform: translateY(-120%) rotate(5deg) translateX(40px); }
+  80%  { z-index: 20; }
+  100% { transform: translateY(0px) rotate(4deg); z-index: 20; }
+}
+
+.ead-align-right .ead-animated-card--out {
+  animation: ead-card-out-rtl 0.6s cubic-bezier(.8,.2,.1,.8) both !important;
+}
+.ead-align-right .ead-animated-card--on {
+  animation: ead-card-on-rtl 0.6s cubic-bezier(.8,.2,.1,.8) both !important;
+}
+
+/* ============== Título / Conteúdo ============== */
+.ead-animated-card-title,
+.ead-animated-card-content,
+.ead-animated-card-divider {
+  width: 100%;
+}
+
+.ead-animated-card-title {
+  margin: 0;
+  font-size: 24px;
+  padding: 8px;
+  text-align: center; /* sobrescrito pelos controles do Elementor */
+}
+
+.ead-animated-card-content {
+  color: #2A2A2A;
+  text-align: center; /* sobrescrito pelos controles do Elementor */
+}
+
+.ead-animated-card-contentcol{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;  /* <— centro vertical */
+  min-width: 0;            /* evita overflow em textos longos */
+}
+
+/* ============== Divisor (HR) ============== */
+.ead-animated-card-divider {
+  display: block;
+  border: none;
+  border-top: 4px dotted #2A2A2A; /* cor/espessura/estilo controlados */
+  width: 25%;                      /* controlado */
+  margin-top: 24px;                /* controlado */
+  margin-bottom: 24px;             /* controlado */
+  /* não setamos margin-left/right aqui para não quebrar o alinhamento via classes abaixo */
+}
+
+/* classes aplicadas no WRAPPER via prefix_class (divider_align) */
+.ead-divider-align-left  .ead-animated-card-divider { margin-left: 0;    margin-right: auto; }
+.ead-divider-align-center .ead-animated-card-divider { margin-left: auto; margin-right: auto; }
+.ead-divider-align-right .ead-animated-card-divider { margin-left: auto; margin-right: 0; }
+
+/* ============== Cards com imagem ============== */
+
+.ead-animated-card-with-image{ display:flex; gap:20px; align-items:center; justify-content:center; }
+.ead-imgpos-left{   flex-direction:row; }
+.ead-imgpos-right{  flex-direction:row-reverse; }
+.ead-imgpos-top{    flex-direction:column; }
+.ead-imgpos-bottom{ flex-direction:column-reverse; }
+
+.ead-animated-card-with-image > .ead-animated-card-imgcol,
+.ead-animated-card-with-image > .ead-animated-card-contentcol {
+  display: block;
+  min-width: 0; /* evita estouro por textos longos */
+}
+
+.ead-animated-card-imgcol {
+  overflow: hidden;      /* segurança extra */
+  display: flex;
+  align-items: center;   /* centraliza verticalmente no eixo da coluna */
+  justify-content: center;
+}
+
+/* A própria imagem: nunca passa da área disponível */
+.ead-animated-card-imgcol img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* não corta; para cortar use 'cover' */
+}
+
+/* ============== Navegação ============== */
+.ead-animated-cards-nav.ead-nav--bottom {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px; /* pode ser alterado via controle (escopo .ead-nav--bottom) */
+}
+
+.ead-animated-cards-nav.ead-nav--sides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50; /* acima dos cards (que vão até 20) */
+}
+.ead-animated-cards-nav.ead-nav--sides .ead-animated-cards-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  z-index: 60;
+}
+.ead-animated-cards-nav.ead-nav--sides .ead-animated-cards-prev { left: 8px; }
+.ead-animated-cards-nav.ead-nav--sides .ead-animated-cards-next { right: 8px; }
+
+/* Botões */
+.ead-animated-cards-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+  box-sizing: border-box;
+  /* REMOVA quaisquer width/height fixos daqui.
+     Use o controle "Padding do botão" que você já tem. */
+}
+
+/* Ícone: funciona para <i> e para <svg> */
+.ead-animated-cards-nav-button i,
+.ead-animated-cards-nav-button svg {
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+  font-size: var(--icon-size, 24px); /* para fontes de ícone */
+  line-height: 1;
+  display: block; /* evita “sombra” de line-height em svg */
+}
+.ead-animated-cards-nav-button:hover { opacity: 0.8; }
+.ead-animated-cards-nav-button.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+
+
+@media (max-width: 921px) {
+  .ead-animated-cards-wrapper.ead-has-sides-nav {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* dentro do card: imagem e texto empilhados */
+  .ead-animated-card-with-image {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px;
+  }
+
+  .ead-animated-card {
+    /* sem width/height aqui! */
+    padding: 24px;  /* agora com ; */
+  }
+
+  /* colunas internas ocupam 100% */
+  .ead-animated-card-imgcol,
+  .ead-animated-card-contentcol {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* imagem responsiva, sem corte */
+  .ead-animated-card-imgcol img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    object-fit: contain;
+  }
+
+  .ead-animated-card-title { font-size: 18px; }
+}
+
+

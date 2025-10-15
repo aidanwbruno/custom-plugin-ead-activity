@@ -1,0 +1,114 @@
+/* ---------- Card ---------- */
+.msq-card{border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.msq-card__header{padding:16px 20px;background:#0ea5a4;color:#fff}
+.msq-card__title{margin:0;font-weight:700}
+
+/* ---------- Body ---------- */
+.msq-card__body{padding:20px}
+.msq-instruction{margin:0 0 12px;font-weight:600;color:#0f172a}
+
+/* ---------- Layout options ---------- */
+.msq-options{list-style:none;margin:0;padding:0;gap:16px}
+.msq--cols .msq-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.msq--cols-2 .msq-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+.msq--cols-1 .msq-options{grid-template-columns:1fr}
+.msq--row .msq-options{display:flex;flex-direction:column}
+
+@media (max-width:800px){
+  .msq--cols .msq-options,
+  .msq--cols-2 .msq-options,
+  .msq--cols-1 .msq-options{grid-template-columns:1fr}
+}
+
+/* ---------- Option ---------- */
+.msq-option{
+  background:#fff;border:2px solid #e2e8f0;border-radius:10px;padding:12px;transition:.2s
+}
+.msq-option:hover{border-color:#cbd5e1}
+
+.msq-radio-like{display:flex;align-items:center;gap:10px;cursor:pointer}
+.msq-radio-like input{position:absolute;opacity:0;pointer-events:none}
+.msq-indicator{width:20px;height:20px;border:2px solid #111;border-radius:50%;display:inline-block;position:relative;flex:0 0 20px}
+.msq-radio-like input:checked + .msq-indicator::after{
+  content:"";position:absolute;inset:3px;border-radius:50%;background:#111;
+}
+.msq-text{color:#0b111a;line-height:1.35}
+
+/* ---------- Buttons ---------- */
+.msq-actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.msq-btn{border:0;border-radius:10px;padding:10px 16px;color:#fff;background:#0ea5a4;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.msq-btn:hover{filter:brightness(.98)}
+.msq-btn--secondary{background:#0b172a10;color:#0b172a;border:2px solid #0b172a1a}
+
+/* ---------- Modal ---------- */
+.msq-modal{display:none}
+.msq-modal[aria-hidden="false"]{display:block}
+.msq-modal__overlay{position:fixed;inset:0;background:rgba(2,6,23,.45);backdrop-filter:saturate(130%) blur(2px);z-index:9998}
+.msq-modal__dialog{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centraliza em X e Y */
+  width: min(980px, calc(100vw - 48px));
+  background: #cfe8e4;
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.22);
+  z-index: 9999;
+
+  /* altura automática conforme conteúdo, com limite de viewport */
+  height: auto;
+  max-height: 90vh;
+  overflow: auto; /* scroll interno se necessário */
+}
+
+@media (max-width:900px){
+  .msq-modal__dialog{
+    width: calc(100vw - 32px);
+  }
+}
+.msq-modal__content{padding:24px}
+.msq-modal__title{margin:0 0 12px;font-weight:800;color:#0b111a}
+
+.msq-modal__close{
+  position:absolute; top:12px; right:12px;
+  width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  -webkit-appearance:none; appearance:none;
+  border:0 !important; outline:0 !important; box-shadow:none !important;
+  background:transparent !important;
+  border-radius:8px; line-height:0;
+  color:inherit; cursor:pointer; z-index:10; isolation:isolate;
+}
+.msq-modal__close::before,
+.msq-modal__close::after,
+.msq-modal__close *::before,
+.msq-modal__close *::after{ content:none !important; display:none !important; }
+.msq-modal__close .msq-x{ display:block; font-size:22px; line-height:1; pointer-events:none; }
+.msq-modal__close:hover{ background: var(--msq-close-hover, rgba(0,0,0,.0)) !important; }
+.msq-modal__close:focus,
+.msq-modal__close:active{ outline:none !important; box-shadow:none !important; border:0 !important; }
+
+.msq-modal__cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:10px 0 6px}
+@media (max-width:800px){.msq-modal__cols{grid-template-columns:1fr}}
+
+.msq-col__title{font-weight:800;margin:10px 0;color:#0b111a}
+
+.msq-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.msq-list li{display:flex;gap:10px;align-items:flex-start}
+
+.msq-badge{
+  display:inline-grid;place-items:center;min-width:22px;min-height:22px;
+  border-radius:50%;font-weight:800;line-height:1
+}
+.msq-badge i, .msq-badge svg{display:block}
+
+/* classes utilitárias para cor (controladas por Style) */
+.msq-badge--key{color:#0ea5a4}
+.msq-badge--you{color:#0ea5a4}
+.msq-badge--ok{color:#16a34a}
+.msq-badge--error{color:#dc2626}
+.msq-badge--missed{color:#f97316}
+
+.msq-item-text{color:#0b111a}
+.msq-feedback{margin-top:18px}
+.msq-modal__footer{margin-top:18px;display:flex;justify-content:flex-end}

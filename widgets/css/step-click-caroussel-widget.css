@@ -1,0 +1,134 @@
+/* Estilos base */
+.step-click-caroussel {
+    display: flex;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.step-click-caroussel-item {
+    flex: 1;
+    background-color: #003366;
+    transition: flex 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.step-click-caroussel-item.active {
+    flex: 8;
+    background-color: #fff;
+}
+
+/* Conteúdo */
+.step-click-content {
+    display: none;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.step-click-caroussel-item.active .step-click-content {
+    display: block;
+}
+
+/* Título no card fechado */
+.step-click-title-closed {
+    display: none;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    word-break: break-word;
+}
+
+.step-click-caroussel-item:not(.active) .step-click-title-closed {
+    display: block;
+}
+
+/* Ícone */
+.step-click-icon {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+}
+
+.step-click-caroussel-item:not(.active) .step-click-icon {
+    display: block;
+}
+
+/* Quando mostrar título no card fechado */
+.step-click-caroussel-item.show-title-closed:not(.active) .step-click-title-closed {
+    position: relative;
+    margin-bottom: 30px; /* Espaço para o ícone */
+}
+
+.step-click-caroussel-item.show-title-closed:not(.active) .step-click-icon {
+    bottom: 10px;
+}
+
+.step-click-title-closed h3 {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    line-height: 1.2;
+}
+
+/* Título no card ativo */
+.step-click-caroussel-item.active .step-click-content h3 {
+    margin-top: 0;
+    line-height: 1.2;
+}
+
+
+/* Versão mobile */
+@media (max-width: 767px) {
+    .step-click-caroussel {
+        flex-direction: column;
+        height: auto !important;
+    }
+    
+    .step-click-caroussel-item {
+        width: 100% !important;
+        flex: 1 0 auto !important;
+        min-height: 60px;
+        margin: 5px 0 !important;
+    }
+    
+    .step-click-caroussel-item.active {
+        min-height: 200px;
+    }
+    
+    .step-click-caroussel-item.show-title-closed:not(.active) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .step-click-caroussel-item.show-title-closed:not(.active) .step-click-title-closed {
+        margin-bottom: 0;
+        padding-bottom: 5px;
+    }
+    
+    .step-click-caroussel-item.show-title-closed:not(.active) .step-click-icon {
+        position: relative;
+        transform: none;
+        left: auto;
+        bottom: auto;
+        padding-top: 5px;
+    }
+    
+    .step-click-title-closed h3 {
+        font-size: 14px;
+    }
+    
+    .step-click-caroussel-item.active .step-click-content h3 {
+        font-size: 18px;
+    }
+}
